@@ -19,14 +19,14 @@
           <b-navbar-nav></b-navbar-nav>
 
           <b-navbar-nav class="ml-auto">
-            <router-link to="/li" class=" mt-1 mx-2 login-link smtext-center smb-3" :class="{color4 : scrollPosition>48}"
+            <router-link to="/login" class=" mt-1 mx-2 login-link smtext-center smb-3" :class="{color4 : scrollPosition>48}"
               >Login</router-link
             >
-            <button
+            <router-link to="/reg"
               class="btn btn-warning text-capitalize font-weight-bold  font-12 mx-3"
             >
               create a free shop
-            </button>
+            </router-link>
           </b-navbar-nav>
         </b-collapse>
       </div>

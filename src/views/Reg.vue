@@ -7,7 +7,7 @@
     />
     <p class="text-center text-white">bislin - Toko Online Praktis Whatsapp</p>
     <div class="card px-5 py-3">
-      <b-form @submit.stop.prevent='formHandel'>
+      <b-form>
         <text-input
           v-model="form.email"
           label="Email"
@@ -20,23 +20,30 @@
           label="Password"
           v-model="form.password"
           type="password"
-          min-length='6'
+          min-length="6"
           ref="pass"
         ></text-input>
         <text-input
           placeholder="Re-Password"
           label="Re-Password"
-          v-model="form.repassword"
+          v-model="repassword"
           type="password"
-          min-length='6'
+          min-length="6"
           ref="repass"
-          :valueMatch='form.password'
+          :valueMatch="form.password"
         ></text-input>
-        <button type="submit" class="d-block w-100 btn btn-info mt-3 mb-5">ok</button>
+        <button
+          type="submit"
+          @click.prevent="formHandel"
+          class="d-block w-100 btn btn-info mt-3 mb-5"
+        >
+          ok
+        </button>
       </b-form>
-      
-      <button class="w-50 d-block btn btn-danger m-auto ">Login With Google</button>
- 
+
+      <button class="w-50 d-block btn btn-danger m-auto ">
+        Login With Google
+      </button>
     </div>
   </div>
 </template>
@@ -46,26 +53,52 @@ export default {
     form: {
       email: "",
       password: "",
-      repassword:''
+      returnSecureToken: true,
     },
+    repassword: "",
   }),
   methods: {
-    formHandel() {
+    async formHandel() {
       this.$refs.repass.validation();
       this.$refs.pass.validation();
       this.$refs.email.validation();
       if (
         this.$refs.email.ifError === false ||
-        this.$refs.pass.ifError === false || this.$refs.repass.ifError === false
+        this.$refs.pass.ifError === false ||
+        this.$refs.repass.ifError === false
       ) {
         return;
       }
+
+      await this.$axios
+        .post(
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAjrLqBknVL0mJVehAfZ1-jzZ6WpUmbfaI",
+          this.form
+        )
+        .then((res) => {
+          localStorage.setItem("token", res.data.idToken);
+          this.$router.replace("/pro");
+          this.sendAuthData();
+        })
+        .error((err) => console.log(err));
+
       console.log(this.form);
     },
+    async sendAuthData() {
+      const token = localStorage.getItem("token");
+      await this.$axios
+        .post(
+          "https://bislin-68a9c-default-rtdb.firebaseio.com/user.json?auth=" +
+            token,
+          this.form
+        )
+        .then((res) => {
+          console.log(res);
+        })
+        .error((err) => console.log(err));
+    },
   },
-  computed: {
-
-  },
+  computed: {},
 };
 </script>
 <style scoped>

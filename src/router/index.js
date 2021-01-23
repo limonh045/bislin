@@ -20,6 +20,19 @@ const routes = [
     path:'/reg',
     name:'Reg',
     component: () =>import("../views/Reg.vue")
+  },
+  {
+    path:'/pro',
+    name:'pro',
+    component: () =>import("../views/Profile.vue"),
+    beforeEnter(to,from,next){
+      const token = localStorage.getItem('token')
+      if(token){
+        next()
+      }else{
+        next('/login')
+      }
+    }
   }
   // {
   //   path: "/about",
