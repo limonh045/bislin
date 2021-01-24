@@ -1,7 +1,6 @@
 <template>
   <div>
     <my-navbar></my-navbar>
-    
 
     <div class="bg-4 pb-3">
       <div class="container">
@@ -20,18 +19,17 @@
         </h3>
         <div class="demo-toko aflex justify-content-center mb-3">
           <button class="demo-toko__btn" v-for="i in 7" :key="i">
-           Toko Online Qurban 99
+            Toko Online Qurban 99
           </button>
         </div>
         <button class="btn btn-danger d-block m-auto px-4 py-3 toko-onlines">
           Buat Toko Online
         </button>
       </div>
-     
     </div>
-     <cocok></cocok>
-     <come-on></come-on>
-     <my-footer></my-footer>
+    <cocok></cocok>
+    <come-on></come-on>
+    <my-footer></my-footer>
   </div>
 </template>
 

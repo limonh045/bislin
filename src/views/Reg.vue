@@ -34,13 +34,11 @@
         ></text-input>
         <button type="submit" class="d-block w-100 btn btn-info mt-3 mb-5">ok</button>
       </b-form>
-      
-      <button class="w-50 d-block btn btn-danger m-auto ">Login With Google</button>
- 
     </div>
   </div>
 </template>
 <script>
+import {db} from '../store/db'
 export default {
   data: () => ({
     form: {
@@ -61,6 +59,14 @@ export default {
         return;
       }
       console.log(this.form);
+      db.auth().createUserWithEmailAndPassword( this.form.email,this.form.password)
+      .then(res=>{
+        console.log(res.user.uid);
+         this.$router.replace("/pro");
+      })
+      .catch(err=>{
+        console.log(err);
+      })
     },
   },
   computed: {

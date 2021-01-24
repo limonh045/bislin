@@ -7,7 +7,7 @@
     />
     <p class="text-center text-white">bislin - Toko Online Praktis Whatsapp</p>
     <div class="card px-5 py-3">
-      <b-form @submit.stop.prevent='formHandel'>
+      <b-form @submit.stop.prevent="formHandel">
         <text-input
           v-model="form.email"
           label="Email"
@@ -20,56 +20,25 @@
           label="Password"
           v-model="form.password"
           type="password"
-          min-length='6'
+          min-length="6"
           ref="pass"
         ></text-input>
-        <button type="submit" class="d-block w-100 btn btn-info mt-3 mb-5">ok</button>
+        <button type="submit" class="d-block w-100 btn btn-info mt-3 mb-5">
+          ok
+        </button>
       </b-form>
-      
-      <button class="w-50 d-block btn btn-danger m-auto ">Login With Google</button>
-      <!-- <b-form  @submit.stop.prevent>
-      <label for="feedback-user">User ID</label>
-      <b-form-input v-model="userId" :state="validation" id="feedback-user"></b-form-input>
-      <b-form-invalid-feedback :state="validation">
-        Your user ID must be 5-12 characters long.
-      </b-form-invalid-feedback>
-      <b-form-valid-feedback :state="validation">
-        Looks Good.
-      </b-form-valid-feedback>
-     </b-form>
-      <b-form @submit.stop.prevent="formHandel">
-        <label for="email">User ID</label>
-        <b-form-input
-          v-model="form.email"
-          :state="validationEmail"
-          id="email"
-        ></b-form-input>
-        <b-form-invalid-feedback :state="validationEmail">
-          Email is invalid
-        </b-form-invalid-feedback>
-        <b-form-valid-feedback :state="validationEmail">
-          Looks Good.
-        </b-form-valid-feedback>
 
-        <label for="password">User ID</label>
-        <b-form-input
-          v-model="form.password"
-          :state="validationPassword"
-          id="password"
-        ></b-form-input>
-        <b-form-invalid-feedback :state="validationPassword">
-          Password Must Be 6 caracter long
-        </b-form-invalid-feedback>
-        <b-form-valid-feedback :state="validationPassword">
-          Looks Good.
-        </b-form-valid-feedback>
-
-        <button type="submit">okkk</button>
-      </b-form> -->
+      <button
+        class="w-50 d-block btn btn-danger m-auto "
+        @click="loginWithGoogle"
+      >
+        Login With Google
+      </button>
     </div>
   </div>
 </template>
 <script>
+import { db ,provider } from "../store/db";
 export default {
   data: () => ({
     form: {
@@ -79,7 +48,6 @@ export default {
   }),
   methods: {
     formHandel() {
-      
       this.$refs.pass.validation();
       this.$refs.email.validation();
       if (
@@ -89,20 +57,28 @@ export default {
         return;
       }
       console.log(this.form);
+      db.auth()
+        .signInWithEmailAndPassword(this.form.email, this.form.password)
+        .then((res) => {
+          console.log(res.user.uid);
+          this.$router.replace("/pro");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+    async loginWithGoogle() {
+     
+      await db
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+          console.log(result);
+          this.$router.replace("/pro");
+        });
     },
   },
-  computed: {
-    // validationEmail() {
-    //   var re = /\S+@\S+\.\S+/;
-    //   return this.form.email === "email" && re.test(this.value);
-    // },
-    // validationPassword() {
-    //   return this.form.password.length > 6;
-    // },
-    //  validation() {
-    //     return this.userId.length > 4 && this.userId.length < 13
-    //   }
-  },
+  computed: {},
 };
 </script>
 <style scoped>

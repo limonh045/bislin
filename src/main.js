@@ -4,10 +4,15 @@ import router from "./router";
 import store from "./store";
 import MyComponent from './components'
 import { BootstrapVue } from 'bootstrap-vue'
+import { firestorePlugin } from 'vuefire'
 import './assets/css/style.css'
 import './assets/css/utility.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+
+
+
+Vue.use(firestorePlugin)
 
 var eventBus = new Vue();
 

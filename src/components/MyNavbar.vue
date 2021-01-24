@@ -1,48 +1,59 @@
 <template>
-  <div class=" navbars-e" :class="{navbartop: scrollPosition>48}">
-    <b-navbar toggleable="lg" type="dark" >
+  <div class=" navbars-e" :class="{ navbartop: scrollPosition > 48 }">
+    <b-navbar toggleable="lg" type="dark">
       <div class="container">
         <b-navbar-brand href="#">
-        
-            <img v-if="scrollPosition<48"
+          <img
+            v-if="scrollPosition < 48"
             src="https://bislin.com/img/logos/logo-bislin-white.svg"
             class="navbar-img"
             alt="Navbar logo"
           />
-          <img src="https://bislin.com/img/logos/bislinlogobigblue.svg" v-else alt="">
-        
+          <img
+            src="https://bislin.com/img/logos/bislinlogobigblue.svg"
+            v-else
+            alt=""
+          />
+
           <img src="https://bislin.com/img/logos/gratis-merah.svg" alt="" />
         </b-navbar-brand>
 
-        <b-navbar-toggle target="nav-collapse" class="toggle-btn" :class="{togglebtn: scrollPosition>48}"></b-navbar-toggle>
+        <b-navbar-toggle
+          target="nav-collapse"
+          class="toggle-btn"
+          :class="{ togglebtn: scrollPosition > 48 }"
+        ></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav></b-navbar-nav>
 
           <b-navbar-nav class="ml-auto">
-            <router-link to="/li" class=" mt-1 mx-2 login-link smtext-center smb-3" :class="{color4 : scrollPosition>48}"
+            <router-link
+              to="/login"
+              class=" mt-1 mx-2 login-link smtext-center smb-3"
+              :class="{ color4: scrollPosition > 48 }"
               >Login</router-link
             >
-            <button
+            <router-link
               class="btn btn-warning text-capitalize font-weight-bold  font-12 mx-3"
+              to="/reg"
             >
-              create a free shop
-            </button>
+              create a free shop</router-link
+            >
           </b-navbar-nav>
         </b-collapse>
       </div>
     </b-navbar>
-    
   </div>
 </template>
 <script>
 export default {
   data: () => ({
-     scrollPosition: null
-      }),
+    scrollPosition: null,
+  }),
   methods: {
     updateScroll() {
       this.scrollPosition = window.scrollY;
-      console.log(this.scrollPosition);
+      // console.log(this.scrollPosition);
     },
   },
 
@@ -55,7 +66,7 @@ export default {
 };
 </script>
 <style>
-.navbars-e{
+.navbars-e {
   background-color: #3bbaed;
   padding-top: 20px;
 }
@@ -68,10 +79,10 @@ export default {
   padding-top: 0 !important;
   z-index: 999;
 }
-.toggle-btn{
+.toggle-btn {
   background: transparent !important;
 }
-.togglebtn{
+.togglebtn {
   background: #ebebeb !important;
   border: 1px solid #ebebeb !important;
 }
@@ -84,5 +95,4 @@ export default {
   font-weight: bold;
   color: #ffff;
 }
-
 </style>
